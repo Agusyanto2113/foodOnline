@@ -42,7 +42,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% for field.errors %}
+                                {% for field in form %}
                                     {% if field.errors %}
                                         {% for error in field.errors %}
                                             <li style="color:red;">{{ error }}</li>

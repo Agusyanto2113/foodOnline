@@ -6,11 +6,12 @@ from django.db.models import Prefetch
 from .models import Cart
 from django.contrib.auth.decorators import login_required
 
-from vendor.models import Vendor
+from vendor.models import Vendor,OpeningHour
 from django.db.models import Q
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import D
 from django.contrib.gis.db.models.functions import Distance
+from datetime import date,datetime
 # Create your views here.
 def marketplace(request):
     vendors = Vendor.objects.filter(is_approved=True,user__is_active=True)[:8]
@@ -31,6 +32,26 @@ def vendor_detail(request,vendor_slug):
         )
     )
 
+    opening_hours = OpeningHour.objects.filter(vendor=vendor).order_by('day','-from_hour')
+
+    #check current day
+    today_date = date.today()
+    today = today_date.isoweekday()
+    current_opening_hours =  OpeningHour.objects.filter(vendor=vendor,day=today)
+
+    # now = datetime.now()
+    # current_time = now.strftime("%H:%M:%S")
+
+    # is_open = None
+    # for i in current_opening_hours:
+    #     start = str(datetime.strptime(i.from_hour,"%H:%M %p").time())
+    #     end = str(datetime.strptime(i.to_hour,"%H:%M %p").time())
+    #     if current_time > start and current_time < end:
+    #         is_open = True
+    #         break
+    #     else:
+    #         is_open = False
+
     if request.user.is_authenticated:
         cart_items = Cart.objects.filter(user=request.user)
     else:
@@ -39,6 +60,8 @@ def vendor_detail(request,vendor_slug):
         'vendor':vendor,
         'categories':categories,
         'cart_items':cart_items,
+        'opening_hours':opening_hours,
+        'current_opening_hours':current_opening_hours,
     }
     return render(request,'marketplace/vendor_detail.html',context)
 

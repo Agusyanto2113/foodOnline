@@ -71,7 +71,7 @@ def is_ajax(request):
 
 def add_to_cart(request,food_id):
     if request.user.is_authenticated:
-        if request.is_ajax:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             try:
                 fooditem = FoodItem.objects.get(id=food_id)
                 try:
@@ -91,7 +91,7 @@ def add_to_cart(request,food_id):
     
 def decrease_cart(request,food_id):
     if request.user.is_authenticated:
-        if request.is_ajax:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             try:
                 fooditem = FoodItem.objects.get(id=food_id)
                 try:

@@ -176,53 +176,53 @@
 
     }).render('#paypal-button-container');
 
-    var options = {
-        "key":"{{RZP_KEY_ID}}",
-        "amount":"{{rzp_amount}}",
-        "currency": "INR",
-        "name":"FoodOnline",
-        "description":"FoodOnline - Multi Vendor Restaurant Marketplace",
-        "image":"{% static 'logo/foodonlineLogo.png' %}",
-        "order_id":"{{rzp_order_id}}",
-        "handler": function(response){
-            // alert(response.razorpay_payment_id);
-            // alert(response.razorpay_order_id);
-            // alert(response.razorpay_signature);
-            const element = document.getElementById('rzp_payment_button');
-            element.innerHTML='';
-            element.innerHTML='<h4 class="text-center"><i class="fa fa-spinner fa-spin"></i> Please wait....</h4>'
+    // var options = {
+    //     "key":"{{RZP_KEY_ID}}",
+    //     "amount":"{{rzp_amount}}",
+    //     "currency": "INR",
+    //     "name":"FoodOnline",
+    //     "description":"FoodOnline - Multi Vendor Restaurant Marketplace",
+    //     "image":"{% static 'logo/foodonlineLogo.png' %}",
+    //     "order_id":"{{rzp_order_id}}",
+    //     "handler": function(response){
+    //         // alert(response.razorpay_payment_id);
+    //         // alert(response.razorpay_order_id);
+    //         // alert(response.razorpay_signature);
+    //         const element = document.getElementById('rzp_payment_button');
+    //         element.innerHTML='';
+    //         element.innerHTML='<h4 class="text-center"><i class="fa fa-spinner fa-spin"></i> Please wait....</h4>'
 
-            var transaction_id = response.razorpay_payment_id
-            var payment_method = 'RazorPay'
-            var status = 'Success'
-            sendTransaction(transaction_id,payment_method,status)
-        },
-        "prefill":{
-            "name":"{{order.name}}",
-            "email":"{{order.email}}",
-            "contact":"{{order.phone}}"
-        },
-        "notes":{
-            "address":"{{order.address}}"
-        },
-        "theme":{
-            "color":"#dc3545"
-        }
-    };
-    var rzp1 = new RazorPay(options);
-    rzp1.on('payment.failed',function(response){
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
-    });
-    document.getElementById('rzp_button').onclick = function(e){
-        rzp1.open();
-        e.preventDefault();
-    }
+    //         var transaction_id = response.razorpay_payment_id
+    //         var payment_method = 'RazorPay'
+    //         var status = 'Success'
+    //         sendTransaction(transaction_id,payment_method,status)
+    //     },
+    //     "prefill":{
+    //         "name":"{{order.name}}",
+    //         "email":"{{order.email}}",
+    //         "contact":"{{order.phone}}"
+    //     },
+    //     "notes":{
+    //         "address":"{{order.address}}"
+    //     },
+    //     "theme":{
+    //         "color":"#dc3545"
+    //     }
+    // };
+    // var rzp1 = new RazorPay(options);
+    // rzp1.on('payment.failed',function(response){
+    //     alert(response.error.code);
+    //     alert(response.error.description);
+    //     alert(response.error.source);
+    //     alert(response.error.step);
+    //     alert(response.error.reason);
+    //     alert(response.error.metadata.order_id);
+    //     alert(response.error.metadata.payment_id);
+    // });
+    // document.getElementById('rzp_button').onclick = function(e){
+    //     rzp1.open();
+    //     e.preventDefault();
+    // }
 
     function sendTransaction(transaction_id,payment_method,status){
         $.ajax({

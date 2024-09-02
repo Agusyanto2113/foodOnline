@@ -67,7 +67,7 @@
         <tr>
             <td><img src="http://{{domain}}{{food.fooditem.image.url}}" alt="Food Image" width="60"></td>
             <td><p style="margin: 0;">{{food.fooditem}}</p>
-            <small><a href="http://{{domain}}{% url 'vendor_detail'food.fooditem.vendor_slug %}" style="color: #ccc;">{{food.fooditem.vendor.vendor_name}}</a></small>
+            <small><a href="http://{{domain}}{% url 'vendor_detail' food.fooditem.vendor.vendor_slug %}" style="color: #ccc;">{{food.fooditem.vendor.vendor_name}}</a></small>
             </td>
             <td>{{food.quantity}}</td>
             <td>{{food.price}}</td>
@@ -75,6 +75,9 @@
         {% endfor %}
     </tbody>
   </table>
+
+
+
 
   <table bgcolor="#EAF0F6" width="100%" role="presentation" border="0" cellpadding="0" cellspacing="10px" style="padding: 30px 30px 60px 60px;">
     <tbody>

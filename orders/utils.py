@@ -21,7 +21,7 @@ def order_total_by_vendor(order,vendor_id):
         print(subtotal)
         print(tax_dict)
 
-                #calculate tax
+        #calculate tax
         for i in val:
             for j in val[i]:
                 tax += float(val[i][j])
